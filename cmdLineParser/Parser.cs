@@ -68,7 +68,20 @@ namespace cmdLineParser
 
         private PropertyInfo GetProperty(string name)
         {
-            return Config.GetType().GetProperties().SingleOrDefault(prop => prop.Name == name);
+            var byName = Config.GetType().GetProperties().SingleOrDefault(prop => prop.Name == name);
+
+            if (byName != null)
+            {
+                return byName;
+            }
+
+            var byAlias = Config.GetType().GetProperties().SingleOrDefault(prop =>
+            {
+                var nameAtt = prop.GetCustomAttribute<NameAttribute>();
+                return nameAtt == null ?  false : nameAtt.Name == name;
+            });
+
+            return byAlias;
         }
     }
 }

@@ -45,5 +45,13 @@ namespace cmdLineParserTests
             Assert.Throws<ArgumentException>(() => parser.Parse("SomethingElse:value SomethingElse:value"));
         }
 
+        [Fact]
+        public void ValueWithAliasSupplied_Parse_ValueReturned()
+        {
+            var parser = new Parser<NamedFieldConfig>(new NamedFieldConfig());
+            var result = parser.Parse("Different:test");
+            Assert.Equal("test", result.SomeField);
+        }
+
     }
 }
