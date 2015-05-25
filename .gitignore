@@ -1,0 +1,5 @@
+/cmdLineParser/bin
+/cmdLineParser/obj
+/cmdLineParser/*.suo
+/cmdLineParserTests/obj
+/cmdLineParserTests/bin
