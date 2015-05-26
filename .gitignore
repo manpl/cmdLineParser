@@ -3,3 +3,4 @@
 /cmdLineParser/*.suo
 /cmdLineParserTests/obj
 /cmdLineParserTests/bin
+/cmdLineParser/packages

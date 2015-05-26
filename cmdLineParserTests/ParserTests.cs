@@ -53,5 +53,31 @@ namespace cmdLineParserTests
             Assert.Equal("test", result.SomeField);
         }
 
+        [Fact]
+        public void IntegerSupplied_Parse_ValueReturned()
+        {
+            var parser = new Parser<TypedConfig<int>>(new TypedConfig<int>());
+            var result = parser.Parse("Property:1");
+            Assert.Equal(1, result.Property);
+        }
+        
+        [Fact]
+        public void DoubleSupplied_Parse_ValueReturned()
+        {
+            TypedPropertyTest<double>("Property:1,0", 1.0);
+        }
+
+        [Fact]
+        public void DecimalSupplied_Parse_ValueReturned()
+        {
+            TypedPropertyTest<decimal>("Property:1,0", 1m);
+        }
+
+        public static void TypedPropertyTest<T>(string input, T expected)
+        {
+            var parser = new Parser<TypedConfig<T>>(new TypedConfig<T>());
+            var result = parser.Parse(input);
+            Assert.Equal(expected, result.Property);
+        }
     }
 }

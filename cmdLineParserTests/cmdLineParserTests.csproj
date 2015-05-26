@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Configs\NamedFieldConfig.cs" />
     <Compile Include="Configs\OneRequiredFieldConfig.cs" />
+    <Compile Include="Configs\TypedConfig.cs" />
     <Compile Include="ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -45,7 +45,9 @@ namespace cmdLineParser
 
                 if (property != null)
                 {
-                    property.SetValue(Config, kp.Value, null);
+                    var type = property.PropertyType;
+                    Object value = Convert.ChangeType(kp.Value, type);
+                    property.SetValue(Config, value, null);
                 }
                 else
                 {
