@@ -45,9 +45,16 @@ namespace cmdLineParser
 
                 if (property != null)
                 {
+                    var option = property.GetCustomAttribute<OptionAttribute>();
+                    if (option != null && !option.Matches(kp.Value))
+                    {
+                        throw new ArgumentException("input");
+                    }
+                    
                     var type = property.PropertyType;
                     Object value = Convert.ChangeType(kp.Value, type);
                     property.SetValue(Config, value, null);
+                    
                 }
                 else
                 {

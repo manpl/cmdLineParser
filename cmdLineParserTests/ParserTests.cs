@@ -79,5 +79,28 @@ namespace cmdLineParserTests
             var result = parser.Parse(input);
             Assert.Equal(expected, result.Property);
         }
+
+        [Fact]
+        public void MatchingOptionSupplied_Parse_ValueReturned()
+        {
+            var parser = new Parser<OptionsConifg<String>>(new OptionsConifg<String>());
+            var result = parser.Parse("setting:1");
+            Assert.Equal("1", result.Property);
+        }
+
+        [Fact]
+        public void NonMatchingOptionSupplied_Parse_ValueReturned()
+        {
+            var parser = new Parser<OptionsConifg<String>>(new OptionsConifg<String>());
+            Assert.Throws<ArgumentException>(()=>parser.Parse("setting:unDefined"));
+        }
+
+        [Fact]
+        public void NonStringMatchingOptionSupplied_Parse_ValueReturned()
+        {
+            var parser = new Parser<OptionsConifg<int>>(new OptionsConifg<int>());
+            var result = parser.Parse("setting:1");
+            Assert.Equal(1, result.Property);
+        }
     }
 }
