@@ -19,17 +19,17 @@ namespace cmdLineParser
             }
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
                 _config = value;
             }
         }
 
         public Parser(T config)
         {
-            if (config == null)
-            {
-                throw new ArgumentNullException();
-            }
-
             Config = config;
         }
 
@@ -54,7 +54,6 @@ namespace cmdLineParser
                     var type = property.PropertyType;
                     Object value = Convert.ChangeType(kp.Value, type);
                     property.SetValue(Config, value, null);
-                    
                 }
                 else
                 {
@@ -91,6 +90,31 @@ namespace cmdLineParser
             });
 
             return byAlias;
+        }
+
+        public String Help()
+        {
+            String result = "";
+
+            var properties = Config.GetType().GetProperties();
+
+            properties.ToList().ForEach(prop => {
+                var descAttr = prop.GetCustomAttribute<DescriptionAttribute>();
+                if (descAttr != null)
+                {
+                    var name = prop.Name;
+                    var aliasAttr = prop.GetCustomAttribute<NameAttribute>();
+                    if (aliasAttr != null)
+                    {
+                        name = aliasAttr.Name;
+                    }
+
+                    var description = name + " - " + descAttr.Description;
+                    result += description;
+                }
+            });
+
+            return result;
         }
     }
 }

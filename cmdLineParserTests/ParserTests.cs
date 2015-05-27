@@ -102,5 +102,21 @@ namespace cmdLineParserTests
             var result = parser.Parse("setting:1");
             Assert.Equal(1, result.Property);
         }
+
+        [Fact]
+        public void ConfigWithSimplePropertyDescription_Help_DescriptionGenerated()
+        {
+            var parser = new Parser<DescriptionConfig>(new DescriptionConfig());
+            var result = parser.Help();
+            Assert.Equal("Property - Sample description", result);
+        }
+
+        [Fact]
+        public void ConfigWithAliasedPropertyDescription_Help_DescriptionGenerated()
+        {
+            var parser = new Parser<AliasDescriptionConfig>(new AliasDescriptionConfig());
+            var result = parser.Help();
+            Assert.Equal("prop - Sample description", result);
+        }
     }
 }
