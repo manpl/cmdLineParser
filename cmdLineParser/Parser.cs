@@ -28,9 +28,9 @@ namespace cmdLineParser
             }
         }
 
-        public Parser(T config)
+        public Parser()
         {
-            Config = config;
+            Config = new T();
         }
 
         public T Parse(string input)
