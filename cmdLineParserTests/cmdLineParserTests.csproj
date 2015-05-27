@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Configs\AliasDescriptionConfig.cs" />
     <Compile Include="Configs\DescriptionConfig.cs" />
+    <Compile Include="Configs\MultiPropertyDescription.cs" />
     <Compile Include="Configs\NamedFieldConfig.cs" />
     <Compile Include="Configs\OneRequiredFieldConfig.cs" />
     <Compile Include="Configs\OptionsConifg.cs" />

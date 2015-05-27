@@ -97,8 +97,13 @@ namespace cmdLineParser
             String result = "";
 
             var properties = Config.GetType().GetProperties();
+            var propsWithDescription = properties.Where(prop => prop.GetCustomAttribute<DescriptionAttribute>() != null)
+                .ToList();
+            var index = 0;
+            var count = propsWithDescription.Count;
 
-            properties.ToList().ForEach(prop => {
+            propsWithDescription.ForEach(prop =>
+            {
                 var descAttr = prop.GetCustomAttribute<DescriptionAttribute>();
                 if (descAttr != null)
                 {
@@ -111,6 +116,13 @@ namespace cmdLineParser
 
                     var description = name + " - " + descAttr.Description;
                     result += description;
+                }
+
+                index++;
+
+                if (index < count)
+                {
+                    result += "\n";
                 }
             });
 

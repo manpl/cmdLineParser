@@ -118,5 +118,15 @@ namespace cmdLineParserTests
             var result = parser.Help();
             Assert.Equal("prop - Sample description", result);
         }
+
+        [Fact]
+        public void ConfigWithMultiplePropertiesWithDescription_Help_DescriptionGenerated()
+        {
+            var parser = new Parser<MultiPropertyDescription>(new MultiPropertyDescription());
+            var result = parser.Help();
+            var expected = "prop1 - Sample description 1\n";
+            expected += "prop2 - Sample description 2";
+            Assert.Equal(expected, result);
+        }
     }
 }
