@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace cmdLineParser.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class NameAttribute : Attribute
     {
         public String Name { get; set; }

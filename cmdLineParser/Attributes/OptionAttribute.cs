@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace cmdLineParser.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class OptionAttribute : Attribute
     {
         public String[] Options { get; private set; }
