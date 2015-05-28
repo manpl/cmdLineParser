@@ -1,10 +1,7 @@
 ﻿using cmdLineParser.Attributes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cmdLineParser
 {
@@ -35,7 +32,12 @@ namespace cmdLineParser
 
         public T Parse(string input)
         {
-            var pairs = input.Split(' ')
+            return Parse(input.Split(' '));
+        }
+
+        public T Parse(params string[] tokens)
+        {
+            var pairs = tokens
                 .Select(token => token.Split(':'))
                 .ToDictionary(pair => pair[0], pair => pair[1]);
 
