@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace cmdLineParserTests.Configs
 {
-    class AliasDescriptionConfig
+    public class AliasDescriptionConfig
     {
         [Name("prop"), Description("Sample description")]
         public String Property { get; set; }

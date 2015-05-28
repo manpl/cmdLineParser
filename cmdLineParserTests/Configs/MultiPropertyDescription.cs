@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace cmdLineParserTests.Configs
 {
-    class MultiPropertyDescription
+    public class MultiPropertyDescription
     {
         [Name("prop1"), Description("Sample description 1")]
         public String Property1 { get; set; }
