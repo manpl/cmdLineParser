@@ -4,3 +4,5 @@
 /cmdLineParserTests/obj
 /cmdLineParserTests/bin
 /cmdLineParser/packages
+/cmdLineParserTests/coverageReport
+/cmdLineParserTests/coverage.xml

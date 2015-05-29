@@ -20,5 +20,13 @@ namespace cmdLineParser.Attributes
         {
             return Options.Any(item => item == value);
         }
+
+        internal void Validate(String value)
+        {
+            if (!this.Matches(value))
+            {
+                throw new ArgumentException("input");
+            }
+        }
     }
 }

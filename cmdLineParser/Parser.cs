@@ -1,7 +1,9 @@
 ﻿using cmdLineParser.Attributes;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using cmdLineParser.Helpers;
 
 namespace cmdLineParser
 {
@@ -43,24 +45,7 @@ namespace cmdLineParser
 
             foreach (var kp in pairs)
             {
-                var property = GetProperty(kp.Key);
-
-                if (property != null)
-                {
-                    var option = property.GetCustomAttribute<OptionAttribute>();
-                    if (option != null && !option.Matches(kp.Value))
-                    {
-                        throw new ArgumentException("input");
-                    }
-                    
-                    var type = property.PropertyType;
-                    Object value = Convert.ChangeType(kp.Value, type);
-                    property.SetValue(Config, value, null);
-                }
-                else
-                {
-                    // property does not match anything in config
-                }
+                SetProperty(kp.Key, kp.Value);
             }
 
             var properties = Config.GetType().GetProperties();
@@ -74,6 +59,28 @@ namespace cmdLineParser
             });
 
             return Config;
+        }
+
+        private void SetProperty(String propertName, String propertyValue)
+        {
+            var property = GetProperty(propertName);
+
+            if (property != null)
+            {
+                var option = property.GetCustomAttribute<OptionAttribute>();
+                if (option != null)
+                {
+                    option.Validate(propertyValue);
+                }
+
+                var type = property.PropertyType;
+                Object value = Convert.ChangeType(propertyValue, type);
+                property.SetValue(Config, value, null);
+            }
+            else
+            {
+                // property does not match anything in config
+            }
         }
 
         private PropertyInfo GetProperty(string name)
@@ -101,34 +108,33 @@ namespace cmdLineParser
             var properties = Config.GetType().GetProperties();
             var propsWithDescription = properties.Where(prop => prop.GetCustomAttribute<DescriptionAttribute>() != null)
                 .ToList();
-            var index = 0;
             var count = propsWithDescription.Count;
 
-            propsWithDescription.ForEach(prop =>
+            propsWithDescription.Foreach((prop, index) =>
             {
                 var descAttr = prop.GetCustomAttribute<DescriptionAttribute>();
-                if (descAttr != null)
-                {
-                    var name = prop.Name;
-                    var aliasAttr = prop.GetCustomAttribute<NameAttribute>();
-                    if (aliasAttr != null)
-                    {
-                        name = aliasAttr.Name;
-                    }
+                var name = GetPropertyName(prop);
+                var description = name + " - " + descAttr.Description;
+                result += description;
 
-                    var description = name + " - " + descAttr.Description;
-                    result += description;
-                }
-
-                index++;
-
-                if (index < count)
+                if (index < count -1)
                 {
                     result += "\n";
                 }
             });
 
             return result;
+        }
+
+        private static string GetPropertyName(PropertyInfo property)
+        {
+            var name = property.Name;
+            var aliasAttr = property.GetCustomAttribute<NameAttribute>();
+            if (aliasAttr != null)
+            {
+                name = aliasAttr.Name;
+            }
+            return name;
         }
     }
 }
